@@ -1,0 +1,30 @@
+
+{% extends 'syllabuses/base.html' %}
+{% block content %}
+<div class="container">
+<br/>
+<h2>Шаг 5</h2>{{syllabus}}
+<h3>Политика и философия курса</h3>
+<br/>
+<form method="post" id="policy-form" action="{% url 'add_policy' syllabus.id %}">
+    {% csrf_token %}
+    <label>Философия курса</label>
+    <textarea name="phylosophy" form = "policy-form"></textarea>
+    <br/>
+    <label>Политика курса</label>
+    <textarea name="policy" form = "policy-form"></textarea>
+    <br/>
+    <button type="submit">Добавить</button>
+</form>
+<br/>
+<a href="{% url 'add_module' syllabus.id %}" class="btn btn-primary btn-lg">Назад</a>
+<a href="{% url 'add_policy' syllabus.id %}" class="btn btn-primary btn-lg">Далее</a>
+</div>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}

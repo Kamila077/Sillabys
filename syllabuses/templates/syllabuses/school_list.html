@@ -1,0 +1,18 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+  <h2>Schools</h2>
+  <ul>
+    {% for school in schools %}
+      <li>{{ school.title }}</li>
+    {% empty %}
+      <li>No schools found.</li>
+    {% endfor %}
+  </ul>
+
+  
+  <a href="{% url 'add_school' %}">Add School</a>
+
+{% endblock %}
+
+

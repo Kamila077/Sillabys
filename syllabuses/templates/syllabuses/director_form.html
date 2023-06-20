@@ -1,0 +1,10 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+  <h2>Add Director</h2>
+  <form method="post" action="{% url 'syllabuses:add_director' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

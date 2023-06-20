@@ -1,0 +1,90 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+<div class="container">
+    <br/>
+    <h2>Мои силлабусы</h2>
+    <table>
+        <tr>
+            <th>Название</th>
+            <th>Дисциплина</th> 
+            <th>Язык обучения</th>
+            <th>Семестр</th> 
+            <th>Статус</th> 
+            <th></th> 
+            <th></th>
+        </tr>
+        {% for syllabus in syllabuses %}
+        <tr>
+            <td>{{ syllabus.syllabus_name }}</td>
+            <td>{{ syllabus.course }}</td>
+            <td>{{ syllabus.language_of_education }}</td>
+            <td>{{ syllabus.semester }}</td>
+            <td>{{ syllabus.status }}</td>
+            <td>
+                <a href="{% url 'syllabus_details' syllabus_id=syllabus.id %}">
+                    <button type="submit" class="btn btn-danger">Посмотреть</button>
+                </a>
+            </td>
+            <td>
+                <form method="POST" action="{% url 'delete_syllabus' syllabus_id=syllabus.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </td>
+            <td>
+                <a href="{% url 'download_syllabus_word' syllabus_id=syllabus.id %}" style="
+    color: #fff;
+    background-color: #3a61d4;
+    border-color: #d43f3a;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+">Скачать в формате Word</a>
+                <a class="download pdf"href="{% url 'download_syllabus_pdf' syllabus_id=syllabus.id %}" style="
+                color: #fff;
+                background-color: #d9534f;
+                border-color: #d43f3a;
+                display: inline-block;
+                margin-bottom: 0;
+                font-weight: 400;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                -ms-touch-action: manipulation;
+                touch-action: manipulation;
+                cursor: pointer;
+                background-image: none;
+                border: 1px solid transparent;
+                padding: 6px 12px;
+                font-size: 14px;
+                line-height: 1.42857143;
+                border-radius: 4px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            ">Скачать в формате PDF</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'syllabuses/base.html' %}
+{% block content %}
+<h1>Вход</h1>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}">Выйти из аккаунта</a>
+    {% else %}
+
+        {% if form.errors %}
+            <p>{{ form.errors.error }}</p>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="post">
+        {{ form }}
+        {% csrf_token %}
+        <button type="submit">Войти</button>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,218 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+<div class="container">
+  <br/>
+  <h2>Детали силлабуса {{ syllabus.syllabus_name }}</h2>
+  <a href="{% url 'continue_edit' syllabus_id=syllabus.id %}" class="btn btn-primary btn-lg"> Продолжить создание</a>
+  <br/>
+  <br/>
+<h4>Основная информация</h4>
+<form method="post" id="syllabus-form">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <th>Название силлабуса</th>
+        <td>
+          <input type="text" name="syllabus_name" value="{{ syllabus.syllabus_name }}">
+        </td>
+      </tr>
+      <tr>
+        <th>Дисциплина</th>
+        <td>
+          <select name="course">
+            {% for course in courses %}
+            <option value="{{ course.pk }}" {% if course.pk == syllabus.course_id %}selected{% endif %}>{{ course.name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Уровень обучения</th>
+        <td>
+          <select name="training_level">
+            {% for level in edu_levels %}
+            <option value="{{ level.pk }}" {% if level.pk == syllabus.training_level.id %}selected{% endif %}>{{ level.type }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Язык обучения</th>
+        <td>
+          <select name="language_of_education">
+            {% for language in languages %}
+            <option value="{{ language.pk }}" {% if language.pk == syllabus.language_of_education_id %}selected{% endif %}>{{ language.title }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Уровень владения языком</th>
+        <td>
+          <select name="proficiency_level">
+            {% for proficiency in proficiencies %}
+            <option value="{{ proficiency.pk }}" {% if proficiency.pk == syllabus.proficiency_level_id %}selected{% endif %}>{{ proficiency.level }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Всего часов</th>
+        <td>
+          <input type="number" name="total_hours" value="{{ syllabus.total_hours }}">
+        </td>
+      </tr>
+      <tr>
+        <th>Классных часов</th>
+        <td>
+          <input type="number" name="classroom_hours" value="{{ syllabus.classroom_hours }}">
+        </td>
+      </tr>
+      <tr>
+        <th>Семестр</th>
+        <td>
+          <input type="number" name="semester" value="{{ syllabus.semester }}">
+        </td>
+      </tr>
+      <tr>
+        <th>ECTS кредиты</th>
+        <td>
+          <input type="number" name="ects" value="{{ syllabus.ects }}">
+        </td>
+      </tr>
+      <tr>
+        <th>СРОП часов</th>
+        <td>
+          <input type="number" name="iw_hours" value="{{ syllabus.iw_hours }}">
+        </td>
+      </tr>
+      <tr>
+        <th>Пререквизиты</th>
+        <td>
+          <textarea name="prerequisites">{{ syllabus.prerequisites }}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <th>Формат обучения</th>
+        <td>
+          <select name="format_of_training">
+            {% for format in formats %}
+            <option value="{{ format.pk }}" {% if format.pk == syllabus.format_of_training_id %}selected{% endif %}>{{ format.type }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Образовательные программы</th>
+        <td>
+          <textarea name="edu_programms">{{ syllabus.edu_programms }}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <th>Время и место проведения</th>
+        <td>
+          <textarea name="time_place">{{ syllabus.time_place }}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <th>Инструктор/Преподаватель</th>
+        <td>
+          <select name="instructor">
+            {% for instructor in instructors %}
+            <option value="{{ instructor.pk }}" {% if instructor.pk == syllabus.instructor_id %}selected{% endif %}>{{ instructor.last_name }} {{ instructor.first_name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Цель курса</th>
+        <td>
+          <textarea name="course_objective">{{ syllabus.course_objective }}</textarea>
+        </td>
+        </tr>
+        <tr>
+        <th>Согласовывает</th>
+        <td>
+          <select name="agreed_with">
+            {% for director in directors %}
+            <option value="{{ director.pk }}" {% if director.pk == syllabus.agreed_with_id %}selected{% endif %}>{{ director.full_name }} {{ director.prof }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Статус</th>
+        <td>
+          <select name="status">
+            {% for status in statuses %}
+            <option value="{{ status.pk }}" {% if status.pk == syllabus.status_id %}selected{% endif %}>{{ status.type }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Философия курса</th>
+        <td>
+          <textarea name="course_philosophy">{{ syllabus.course_philosophy }}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <th>Политика курса</th>
+        <td>
+          <textarea name="course_etics">{{ syllabus.course_etics }}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <th>На основе ASU</th>
+        <td>
+          <input type="checkbox" name="asu" {% if syllabus.asu %}checked{% endif %}>
+        </td>
+      </tr>
+    </table>
+    <button type="submit">Обновить</button>
+    
+  </form>
+{% if syllabus.status.type == "added modules" or syllabus.status.type == "added policy" or syllabus.status.type == "added policy" or syllabus.status.type == "Ready" %}
+<h3>Добавлено:</h3>
+<table>
+  <tr>
+    <th>Неделя</th>
+    <th>Тема</th>
+    <th>Формат</th>
+    <th>Задания</th>
+    <th>Результаты обучения</th>
+    <th>Вопросы по модулю</th>
+    <th>Литература</th>
+    <th>Оценивание</th>
+    <th>Максимальный процент</th>
+    <th>Максимальный вес</th>
+    <th>Итого в баллах</th>
+    <th></th>
+  </tr>
+
+  {% for module in modules %}
+    <tr>
+      <td>{{ module.week }}</td>
+      <td>{{ module.theme }}</td>
+      <td>{{ module.format }}</td>
+      <td>{{ module.tasks }}</td>
+      <td>{{ module.course_lo }}</td>
+      <td>{{ module.questions }}</td>
+      <td>{{ module.literature }}</td>
+      <td>{{ module.grading }}</td>
+      <td>{{ module.max_percent }}</td>
+      <td>{{ module.max_weight }}</td>
+      <td>{{ module.total_in_points }}</td>
+      <td>
+        <form method="POST" action="{% url 'delete_module' pk=module.id syllabus_id=syllabus.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+{% endif %}
+</div>
+{% endblock %}

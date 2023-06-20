@@ -1,0 +1,49 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+<div class="container">
+<br/>
+<h2>Шаг 3</h2>{{syllabus}}
+<br>
+Укажите обязательную и дополнительную литературу
+<br/>
+<br/>
+<form method="post" id="literature-form">
+    {% csrf_token %}
+    <select class="form-input" form = "literature-form" name="liter">
+        {% for r in literatures %}
+        <option value={{r.id}}>{{r.title}}</option>
+        {% endfor %}
+    </select>
+    <br/>
+    <label>Обязательная</label>
+    <input value="1" type="radio" name="mandatory" form = "literature-form">
+    
+    <label>Дополнительная</label>
+    <input value="0" type="radio" name="mandatory" form = "literature-form">
+    <button type="submit">Добавить</button>
+</form>
+<!-- Отображение добавленной литературы -->
+<h3>Добавленная в силлабус литература</h3>
+<ol>
+  {% for literature in literaturesinsyllabus %}
+      <li>{{ literature.literature }}
+        {% if literature.mandatory == True %}
+        Обязательная
+        {% else %}
+        Дополнительная
+        {% endif %}
+        <form method="POST" action="{% url 'delete_literature' pk=literature.id syllabus_id=syllabus.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+      </li>
+
+  {% endfor %}
+</ol>
+<br/>
+<a href="{% url 'literature_form' syllabus.id %}" class="btn btn-primary btn-lg">Назад</a>
+<a href="{% url 'half' syllabus.id %}" class="btn btn-primary btn-lg">Далее</a>
+
+</div>
+{% endblock %}

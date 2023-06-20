@@ -1,0 +1,17 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+<div class="container">
+<br/>
+<h2>Шаг 1</h2><br/>
+Заполните основную информацию о Дисциплине 
+<br/>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Далее</button>
+  </form>
+  </form>
+
+</div>
+{% endblock %}

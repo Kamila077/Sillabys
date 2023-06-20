@@ -1,0 +1,23 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Просмотр силлабусов</title>
+</head>
+<body>
+    <h1>Список силлабусов</h1>
+    <ul>
+        {% for syllabus in syllabuses %}
+            <li>
+                <a href="{% url 'syllabuses:detail' syllabus.id %}">{{ syllabus.syllabus_name }}</a>
+                - {{ syllabus.course }}, {{ syllabus.language_of_education }}
+            </li>
+        {% empty %}
+            <li>Нет созданных силлабусов</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+{% endblock %}

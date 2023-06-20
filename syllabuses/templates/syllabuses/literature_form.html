@@ -1,0 +1,27 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+<div class="container">
+  <br/>
+  <h2>Шаг 2</h2><br/>
+  Заполните информацию о литературе
+  <br/>
+  <form method="post" id="literature-form">
+      {% csrf_token %}
+      <input class="form-input" name="title">
+      <button type="submit">Добавить литературу по дисциплине {{ syllabus.course }}</button>
+  </form>
+  <!-- Отображение добавленной литературы -->
+<h3>Добавленная литература</h3>
+<ol>
+    {% for literature in literatures %}
+        <li>{{ literature.title }}</li>
+    {% endfor %}
+</ol>
+<br/>
+<a href="{% url 'create_syllabus'%}" class="btn btn-primary btn-lg">Назад</a>
+<a href="{% url 'next_step' syllabus.id %}" class="btn btn-primary btn-lg">Далее</a>
+</div>
+
+
+{% endblock %}

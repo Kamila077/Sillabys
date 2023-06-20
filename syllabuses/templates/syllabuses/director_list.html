@@ -1,0 +1,12 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+  <h2>Directors</h2>
+  <ul>
+    {% for director in directors %}
+      <li>{{ director.full_name }}</li>
+    {% empty %}
+      <li>No directors found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

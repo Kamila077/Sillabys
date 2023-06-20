@@ -1,0 +1,115 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+<div class="container">
+<br/>
+<h2>Шаг 4</h2>{{syllabus}}
+
+<table>
+  <tr>
+    <th>Результаты обучения курса (РО курса)</th>
+    <th>Результаты обучения образовательной программы (РО ОП)</th> 
+  </tr>
+  <tr>
+    <td>{{lo11.info}}</td>
+    <td>{{lo22.info}}</td>
+  </tr>
+</table>
+<h3>Тематический план</h3>
+<br>
+
+<h3>Добавлено:</h3>
+<table>
+  <tr>
+    <th>Неделя</th>
+    <th>Тема</th>
+    <th>Формат</th>
+    <th>Задания</th>
+    <th>Результаты обучения</th>
+    <th>Вопросы по модулю</th>
+    <th>Литература</th>
+    <th>Оценивание</th>
+    <th>Максимальный процент</th>
+    <th>Максимальный вес</th>
+    <th>Итого в баллах</th>
+    <th></th>
+  </tr>
+
+  {% for module in modules %}
+    <tr>
+      <td>{{ module.week }}</td>
+      <td>{{ module.theme }}</td>
+      <td>{{ module.format }}</td>
+      <td>{{ module.tasks }}</td>
+      <td>{{ module.course_lo }}</td>
+      <td>{{ module.questions }}</td>
+      <td>{{ module.literature }}</td>
+      <td>{{ module.grading }}</td>
+      <td>{{ module.max_percent }}</td>
+      <td>{{ module.max_weight }}</td>
+      <td>{{ module.total_in_points }}</td>
+      <td>
+        <form method="POST" action="{% url 'delete_module' pk=module.id syllabus_id=syllabus.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+Добавьте каждый модуль с помощью формы снизу
+<br/>
+<br/>
+<form method="post" id="module-form">
+    {% csrf_token %}
+    <label>Неделя</label>
+    <input type="number" name="week" form = "module-form">
+    <br/>
+    <label>Тема</label>
+    <textarea name="theme" form = "module-form"></textarea>
+    <br/>
+    Формат
+    <select class="form-input" form = "module-form" name="format">
+        {% for f in formats %}
+        <option value={{f.id}}>{{f.type}}</option>
+        {% endfor %}
+    </select>
+    <br/>
+    <label>Задания</label>
+    <textarea name="tasks" form = "module-form"></textarea>
+    <br/>
+    <label>Результаты обучения</label>
+    <textarea name="lo" form = "module-form"></textarea>
+    <br/>
+    <label>Вопросы по модулю</label>
+    <textarea name="questions" form = "module-form"></textarea>
+    <br/>
+    Литература
+    <select class="form-input" form = "module-form" name="liter">
+        {% for literature in literatures %}
+        <option value={{literature.id}}>{{literature.literature}}</option>
+        {% endfor %}
+    </select>
+    <br/>
+    <label>Оценивание</label>
+    <input type="text" name="grading" form = "module-form">
+    <br/>
+    <label>Максимальный процент</label>
+    <input type="number" name="maxpercent" form = "module-form">
+    <br/>
+    <label>Максимальный вес</label>
+    <input type="number" name="maxvalue" form = "module-form">
+    <br/>
+    <label>В баллах</label>
+    <input type="number" name="total_in_points" form = "module-form">
+    <br/>
+
+    <button type="submit">Добавить</button>
+</form>
+
+<br/>
+<a href="{% url 'next_step' syllabus.id %}" class="btn btn-primary btn-lg">Назад</a>
+<a href="{% url 'add_policy' syllabus.id %}" class="btn btn-primary btn-lg">Далее</a>
+
+</div>
+{% endblock %}

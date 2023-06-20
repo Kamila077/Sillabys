@@ -1,0 +1,18 @@
+{% extends 'syllabuses/base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление преподавателя</title>
+</head>
+<body>
+    <h1>Добавление преподавателя</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить</button>
+    </form>
+</body>
+</html>
+{% endblock %}
