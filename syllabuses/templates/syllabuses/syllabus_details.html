@@ -10,19 +10,21 @@
 <h4>Основная информация</h4>
 <form method="post" id="syllabus-form">
     {% csrf_token %}
-    <table>
+            'semester': forms.NumberInput(attrs={'rows': 1, "class": "form-control"}),
+    <table class="table">
       <tr>
-        <th>Название силлабуса</th>
+        <th class="form-label">Название силлабуса</th>
         <td>
-          <input type="text" name="syllabus_name" value="{{ syllabus.syllabus_name }}">
+          <input class="form-control" type="text" name="syllabus_name" value="{{ syllabus.syllabus_name }}">          
         </td>
       </tr>
       <tr>
-        <th>Дисциплина</th>
+        <th class="mb-3">Дисциплина</th>
         <td>
-          <select name="course">
+          <select class="form-select" aria-label="Не выбрано" name="course">
+            <option selected>Не выбрано</option>
             {% for course in courses %}
-            <option value="{{ course.pk }}" {% if course.pk == syllabus.course_id %}selected{% endif %}>{{ course.name }}</option>
+            <option value="{{ course.pk }}">{{ course.name }}</option>
             {% endfor %}
           </select>
         </td>
@@ -30,7 +32,7 @@
       <tr>
         <th>Уровень обучения</th>
         <td>
-          <select name="training_level">
+          <select class="form-select" name="training_level">
             {% for level in edu_levels %}
             <option value="{{ level.pk }}" {% if level.pk == syllabus.training_level.id %}selected{% endif %}>{{ level.type }}</option>
             {% endfor %}
@@ -40,7 +42,7 @@
       <tr>
         <th>Язык обучения</th>
         <td>
-          <select name="language_of_education">
+          <select class="form-select" name="language_of_education">
             {% for language in languages %}
             <option value="{{ language.pk }}" {% if language.pk == syllabus.language_of_education_id %}selected{% endif %}>{{ language.title }}</option>
             {% endfor %}
@@ -50,7 +52,7 @@
       <tr>
         <th>Уровень владения языком</th>
         <td>
-          <select name="proficiency_level">
+          <select class="form-select" name="proficiency_level">
             {% for proficiency in proficiencies %}
             <option value="{{ proficiency.pk }}" {% if proficiency.pk == syllabus.proficiency_level_id %}selected{% endif %}>{{ proficiency.level }}</option>
             {% endfor %}
@@ -60,43 +62,43 @@
       <tr>
         <th>Всего часов</th>
         <td>
-          <input type="number" name="total_hours" value="{{ syllabus.total_hours }}">
+          <input class="form-control" type="number" name="total_hours" value="{{ syllabus.total_hours }}">
         </td>
       </tr>
       <tr>
         <th>Классных часов</th>
         <td>
-          <input type="number" name="classroom_hours" value="{{ syllabus.classroom_hours }}">
+          <input class="form-control" type="number" name="classroom_hours" value="{{ syllabus.classroom_hours }}">
         </td>
       </tr>
       <tr>
         <th>Семестр</th>
         <td>
-          <input type="number" name="semester" value="{{ syllabus.semester }}">
+          <input class="form-control" type="number" name="semester" value="{{ syllabus.semester }}">
         </td>
       </tr>
       <tr>
-        <th>ECTS кредиты</th>
+        <th class="mb-3">ECTS кредиты</th>
         <td>
-          <input type="number" name="ects" value="{{ syllabus.ects }}">
+          <input class="form-control" type="number" name="ects" value="{{ syllabus.ects }}">
         </td>
       </tr>
       <tr>
         <th>СРОП часов</th>
         <td>
-          <input type="number" name="iw_hours" value="{{ syllabus.iw_hours }}">
+          <input class="form-control" type="number" name="iw_hours" value="{{ syllabus.iw_hours }}">
         </td>
       </tr>
       <tr>
         <th>Пререквизиты</th>
         <td>
-          <textarea name="prerequisites">{{ syllabus.prerequisites }}</textarea>
+          <textarea class="form-control" name="prerequisites">{{ syllabus.prerequisites }}</textarea>
         </td>
       </tr>
       <tr>
-        <th>Формат обучения</th>
+        <th class="mb-3">Формат обучения</th>
         <td>
-          <select name="format_of_training">
+          <select class="form-select" name="format_of_training">
             {% for format in formats %}
             <option value="{{ format.pk }}" {% if format.pk == syllabus.format_of_training_id %}selected{% endif %}>{{ format.type }}</option>
             {% endfor %}
@@ -106,19 +108,19 @@
       <tr>
         <th>Образовательные программы</th>
         <td>
-          <textarea name="edu_programms">{{ syllabus.edu_programms }}</textarea>
+          <textarea class="form-control" name="edu_programms">{{ syllabus.edu_programms }}</textarea>
         </td>
       </tr>
       <tr>
         <th>Время и место проведения</th>
         <td>
-          <textarea name="time_place">{{ syllabus.time_place }}</textarea>
+          <textarea class="form-control" name="time_place">{{ syllabus.time_place }}</textarea>
         </td>
       </tr>
       <tr>
         <th>Инструктор/Преподаватель</th>
         <td>
-          <select name="instructor">
+          <select class="form-select" name="instructor">
             {% for instructor in instructors %}
             <option value="{{ instructor.pk }}" {% if instructor.pk == syllabus.instructor_id %}selected{% endif %}>{{ instructor.last_name }} {{ instructor.first_name }}</option>
             {% endfor %}
@@ -128,13 +130,13 @@
       <tr>
         <th>Цель курса</th>
         <td>
-          <textarea name="course_objective">{{ syllabus.course_objective }}</textarea>
+          <textarea class="form-control" name="course_objective">{{ syllabus.course_objective }}</textarea>
         </td>
         </tr>
         <tr>
         <th>Согласовывает</th>
         <td>
-          <select name="agreed_with">
+          <select class="form-select" name="agreed_with">
             {% for director in directors %}
             <option value="{{ director.pk }}" {% if director.pk == syllabus.agreed_with_id %}selected{% endif %}>{{ director.full_name }} {{ director.prof }}</option>
             {% endfor %}
@@ -144,7 +146,7 @@
       <tr>
         <th>Статус</th>
         <td>
-          <select name="status">
+          <select class="form-select" name="status">
             {% for status in statuses %}
             <option value="{{ status.pk }}" {% if status.pk == syllabus.status_id %}selected{% endif %}>{{ status.type }}</option>
             {% endfor %}
@@ -154,13 +156,13 @@
       <tr>
         <th>Философия курса</th>
         <td>
-          <textarea name="course_philosophy">{{ syllabus.course_philosophy }}</textarea>
+          <textarea class="form-control" name="course_philosophy">{{ syllabus.course_philosophy }}</textarea>
         </td>
       </tr>
       <tr>
         <th>Политика курса</th>
         <td>
-          <textarea name="course_etics">{{ syllabus.course_etics }}</textarea>
+          <textarea class="form-control" name="course_etics">{{ syllabus.course_etics }}</textarea>
         </td>
       </tr>
       <tr>
@@ -175,7 +177,7 @@
   </form>
 {% if syllabus.status.type == "added modules" or syllabus.status.type == "added policy" or syllabus.status.type == "added policy" or syllabus.status.type == "Ready" %}
 <h3>Добавлено:</h3>
-<table>
+<table class="table">
   <tr>
     <th>Неделя</th>
     <th>Тема</th>
@@ -216,3 +218,5 @@
 {% endif %}
 </div>
 {% endblock %}
+
+<!-- syllabus -->

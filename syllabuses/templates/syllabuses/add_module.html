@@ -5,7 +5,7 @@
 <br/>
 <h2>Шаг 4</h2>{{syllabus}}
 
-<table>
+<table class="table">
   <tr>
     <th>Результаты обучения курса (РО курса)</th>
     <th>Результаты обучения образовательной программы (РО ОП)</th> 
@@ -19,7 +19,7 @@
 <br>
 
 <h3>Добавлено:</h3>
-<table>
+<table class="table">
   <tr>
     <th>Неделя</th>
     <th>Тема</th>
@@ -63,10 +63,10 @@
 <form method="post" id="module-form">
     {% csrf_token %}
     <label>Неделя</label>
-    <input type="number" name="week" form = "module-form">
+    <input class="form-control" type="number" name="week" form = "module-form">
     <br/>
     <label>Тема</label>
-    <textarea name="theme" form = "module-form"></textarea>
+    <textarea class="form-control" name="theme" form = "module-form"></textarea>
     <br/>
     Формат
     <select class="form-input" form = "module-form" name="format">
@@ -76,35 +76,35 @@
     </select>
     <br/>
     <label>Задания</label>
-    <textarea name="tasks" form = "module-form"></textarea>
+    <textarea class="form-control" name="tasks" form = "module-form"></textarea>
     <br/>
     <label>Результаты обучения</label>
-    <textarea name="lo" form = "module-form"></textarea>
+    <textarea class="form-control" name="lo" form = "module-form"></textarea>
     <br/>
     <label>Вопросы по модулю</label>
-    <textarea name="questions" form = "module-form"></textarea>
+    <textarea class="form-control" name="questions" form = "module-form"></textarea>
     <br/>
     Литература
-    <select class="form-input" form = "module-form" name="liter">
+    <select class="form-control" form = "module-form" name="liter">
         {% for literature in literatures %}
         <option value={{literature.id}}>{{literature.literature}}</option>
         {% endfor %}
     </select>
     <br/>
     <label>Оценивание</label>
-    <input type="text" name="grading" form = "module-form">
+    <input class="form-control" type="text" name="grading" form = "module-form">
     <br/>
     <label>Максимальный процент</label>
-    <input type="number" name="maxpercent" form = "module-form">
+    <input class="form-control" type="number" name="maxpercent" form = "module-form">
     <br/>
     <label>Максимальный вес</label>
-    <input type="number" name="maxvalue" form = "module-form">
+    <input class="form-control" type="number" name="maxvalue" form = "module-form">
     <br/>
     <label>В баллах</label>
-    <input type="number" name="total_in_points" form = "module-form">
+    <input class="form-control" type="number" name="total_in_points" form = "module-form">
     <br/>
 
-    <button type="submit">Добавить</button>
+    <button class="btn btn-secondary" type="submit">Добавить</button>
 </form>
 
 <br/>

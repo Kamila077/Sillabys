@@ -10,7 +10,7 @@
 <br/>
 <form method="post" id="literature-form">
     {% csrf_token %}
-    <select class="form-input" form = "literature-form" name="liter">
+    <select class="form-select" form = "literature-form" name="liter" style="width: 50rem;">
         {% for r in literatures %}
         <option value={{r.id}}>{{r.title}}</option>
         {% endfor %}

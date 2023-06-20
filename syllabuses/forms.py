@@ -48,10 +48,27 @@ class SyllabusForm(forms.ModelForm):
             'asu',
         ]
         widgets = {
-            'prerequisites': forms.Textarea(attrs={'rows': 4}),
-            'edu_programms': forms.Textarea(attrs={'rows': 4}),
-            'time_place': forms.Textarea(attrs={'rows': 4}),
-            'course_objective': forms.Textarea(attrs={'rows': 4}),
+            'prerequisites': forms.Textarea(attrs={'rows': 1, "class": "form-control"}),
+            'edu_programms': forms.Textarea(attrs={'rows': 1, "class": "form-control"}),
+            'time_place': forms.Textarea(attrs={'rows': 1, "class": "form-control"}),
+            'course_objective': forms.Textarea(attrs={'rows': 1, "class": "form-control"}),
+            'syllabus_name': forms.TextInput(attrs={'rows': 1, "class": "form-control"}),
+            'course': forms.Select(attrs={'rows': 2, "class": "form-select"}),
+            'training_level': forms.Select(attrs={'rows': 2, "class": "form-control"}),
+            'language_of_education': forms.Select(attrs={'rows': 2, "class": "form-control"}),
+            'proficiency_level': forms.Select(attrs={'rows': 2, "class": "form-control"}),
+            'total_hours': forms.NumberInput(attrs={'rows': 1, "class": "form-control"}),
+            'classroom_hours': forms.NumberInput(attrs={'rows': 1, "class": "form-control"}),
+            'ects': forms.NumberInput(attrs={'rows': 1, "class": "form-control"}),
+            'semester': forms.NumberInput(attrs={'rows': 1, "class": "form-control"}),
+            'iw_hours': forms.NumberInput(attrs={'rows': 1, "class": "form-control"}),
+            'format_of_training': forms.Select(attrs={'rows': 2, "class": "form-control"}),
+            'edu_programms': forms.Textarea(attrs={'rows': 1, "class": "form-control"}),
+            'instructor': forms.Select(attrs={'rows': 2, "class": "form-control"}),
+            'agreed_with': forms.Select(attrs={'rows': 2, "class": "form-control"}),
+            # 'asu': forms.Textarea(attrs={'rows': 1, "class": "form-control"}),
+
+
         }
 
 

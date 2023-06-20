@@ -64,6 +64,33 @@ def download_syllabus_as_word(request, syllabus_id):
     response = FileResponse(file_stream, as_attachment=True, filename=filename)
     return response
 
+# def download_syllabus_as_pdf(request, syllabus_id):
+#     syllabus = get_object_or_404(Syllabus, pk=syllabus_id)
+
+#     buffer = io.BytesIO()
+#     p = canvas.Canvas(buffer)
+
+#     p.setFont("Helvetica", 12)
+#     p.drawString(100, 700, syllabus.syllabus_name)
+#     p.drawString(100, 650, f"Discipline: {syllabus.course}")
+#     p.drawString(100, 600, f"Language of instruction: {syllabus.language_of_education}")
+#     p.drawString(100, 550, f"Purpose of the course: {syllabus.course_objective}")
+
+#     y = 500
+#     literature_set = syllabus.literature_set.all()
+#     for literature in literature_set:
+#         p.drawString(100, y, literature.title)
+#         y -= 20
+
+#     p.showPage()
+#     p.save()
+
+#     buffer.seek(0)
+
+#     response = FileResponse(buffer, as_attachment=True, filename=f"{syllabus.syllabus_name}.pdf")
+#     return response
+
+
 def download_syllabus_as_pdf(request, syllabus_id):
     syllabus = get_object_or_404(Syllabus, pk=syllabus_id)
 
@@ -71,16 +98,49 @@ def download_syllabus_as_pdf(request, syllabus_id):
     p = canvas.Canvas(buffer)
 
     p.setFont("Helvetica", 12)
-    p.drawString(100, 700, syllabus.syllabus_name)
-    p.drawString(100, 650, f"Дисциплина: {syllabus.course}")
-    p.drawString(100, 600, f"Язык обучения: {syllabus.language_of_education}")
-    p.drawString(100, 550, f"Цель курса: {syllabus.course_objective}")
+    y = 650
 
-    y = 500
-    literature_set = syllabus.literature_set.all()
-    for literature in literature_set:
-        p.drawString(100, y, literature.title)
+    # Helper function to draw text with specified position and move the y-coordinate
+    def draw_text(x, text):
+        nonlocal y
+        p.drawString(x, y, text)
         y -= 20
+
+    draw_text(100, syllabus.syllabus_name)
+    draw_text(100, f"Discipline: {syllabus.course}")
+    draw_text(100, f"Training Level: {syllabus.training_level}")
+    draw_text(100, f"Language of Education: {syllabus.language_of_education}")
+    draw_text(100, f"Language Proficiency Level: {syllabus.proficiency_level}")
+    draw_text(100, f"Total Hours: {syllabus.total_hours}")
+    draw_text(100, f"Classroom Hours: {syllabus.classroom_hours}")
+    draw_text(100, f"Semester: {syllabus.semester}")
+    draw_text(100, f"ECTS Credits: {syllabus.ects}")
+    draw_text(100, f"IW Hours: {syllabus.iw_hours}")
+    draw_text(100, f"Prerequisites: {syllabus.prerequisites}")
+    draw_text(100, f"Training Format: {syllabus.format_of_training}")
+    draw_text(100, f"Educational Programs: {syllabus.edu_programms}")
+    draw_text(100, f"Time and Place of Conduct: {syllabus.time_place}")
+    draw_text(100, f"Instructor/Teacher: {syllabus.instructor}")
+    draw_text(100, f"Course Objective: {syllabus.course_objective}")
+    draw_text(100, f"Course Philosophy: {syllabus.course_philosophy}")
+    draw_text(100, f"Course Policy: {syllabus.course_etics}")
+
+    draw_text(100, "Literature")
+    for literature in syllabus.literature_set.all():
+        draw_text(120, literature.title)
+
+    draw_text(100, "Modules")
+    for module in syllabus.module_set.all():
+        draw_text(120, f"Week {module.week}")
+        draw_text(120, f"Theme: {module.theme}")
+        draw_text(120, f"Format: {module.format}")
+        draw_text(120, f"Tasks: {module.tasks}")
+        draw_text(120, f"Course Learning Outcomes: {module.course_lo}")
+        draw_text(120, f"Module Questions: {module.questions}")
+        draw_text(120, f"Grading: {module.grading}")
+        draw_text(120, f"Maximum Percentage: {module.max_percent}")
+        draw_text(120, f"Maximum Weight: {module.max_weight}")
+        draw_text(120, f"In Points: {module.total_in_points}")
 
     p.showPage()
     p.save()
@@ -90,6 +150,69 @@ def download_syllabus_as_pdf(request, syllabus_id):
     response = FileResponse(buffer, as_attachment=True, filename=f"{syllabus.syllabus_name}.pdf")
     return response
 
+
+# def download_syllabus_as_pdf(request, syllabus_id):
+#     syllabus = get_object_or_404(Syllabus, pk=syllabus_id)
+
+#     buffer = io.BytesIO()
+#     p = canvas.Canvas(buffer)
+
+    # p.setFont("Helvetica", 12)
+    # p.drawString(100, 700, syllabus.syllabus_name)
+    # p.drawString(100, 650, f"Discipline: {syllabus.course}")
+    # p.drawString(100, 600, f"Language of instruction: {syllabus.language_of_education}")
+    # p.drawString(100, 550, f"Purpose of the course: {syllabus.course_objective}")
+
+    
+    # p.drawString(syllabus.syllabus_name)
+    # p.drawString(100, 700, f"Дисциплина: {syllabus.course}")
+    # p.drawString(100, 700, f"Уровень обучения: {syllabus.training_level}")
+    # p.drawString(100, 700, f"Язык обучения: {syllabus.language_of_education}")
+    # p.drawString(100, 700, f"Уровень владения языком: {syllabus.proficiency_level}")
+    # p.drawString(100, 700, f"Всего часов: {syllabus.total_hours}")
+    # p.drawString(100, 700, f"Классных часов: {syllabus.classroom_hours}")
+    # p.drawString(100, 700, f"Семестр: {syllabus.semester}")
+    # p.drawString(100, 700, f"ECTS кредиты: {syllabus.ects}")
+    # p.drawString(100, 700, f"СРОП часов: {syllabus.iw_hours}")
+    # p.drawString(100, 700, f"Пререквизиты: {syllabus.prerequisites}")
+    # p.drawString(100, 700, f"Образовательные программы: {syllabus.edu_programms}")
+    # p.drawString(100, 700, f"Формат обучения: {syllabus.format_of_training}")
+    # p.drawString(100, 700, f"Время и место проведения: {syllabus.time_place}")
+    # p.drawString(100, 700, f"Инструктор/Преподаватель: {syllabus.instructor}")
+    # p.drawString(100, 700, f"Цель курса: {syllabus.course_objective}")
+    # p.drawString(100, 700, f"Философия курса: {syllabus.course_philosophy}")
+    # p.drawString(100, 700, f"Политика курса: {syllabus.course_etics}")
+
+    # p.drawString("Литература", level=2)
+    # for literature in syllabus.literature_set.all():
+    #     p.drawString(literature.title)
+
+    # p.drawString("Модули", level=2)
+    # for module in syllabus.module_set.all():
+    #     p.drawString(f"Неделя {module.week}", level=3)
+    #     p.drawString(f"Тема: {module.theme}")
+    #     p.drawString(f"Формат: {module.format}")
+    #     p.drawString(f"Задания: {module.tasks}")
+    #     p.drawString(f"Результаты обучения: {module.course_lo}")
+    #     p.drawString(f"Вопросы по модулю: {module.questions}")
+    #     p.drawString(f"Оценивание: {module.grading}")
+    #     p.drawString(f"Максимальный процент: {module.max_percent}")
+    #     p.drawString(f"Максимальный вес: {module.max_weight}")
+    #     p.drawString(f"В баллах: {module.total_in_points}")
+
+    # y = 500
+    # literature_set = syllabus.literature_set.all()
+    # for literature in literature_set:
+    #     p.drawString(100, y, literature.title)
+    #     y -= 20
+
+    # p.showPage()
+    # p.save()
+
+    # buffer.seek(0)
+
+    # response = FileResponse(buffer, as_attachment=True, filename=f"{syllabus.syllabus_name}.pdf")
+    # return response
 # Create your views here.
 def home(request):
     return render(request, 'syllabuses/home.html', {})

@@ -8,7 +8,7 @@
   <br/>
   <form method="post" id="literature-form">
       {% csrf_token %}
-      <input class="form-input" name="title">
+      <input class="form-control" name="title">
       <button type="submit">Добавить литературу по дисциплине {{ syllabus.course }}</button>
   </form>
   <!-- Отображение добавленной литературы -->
